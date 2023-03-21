@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier
+_commit: v1.2.1
+_src_path: gh:lincc-frameworks/python-project-template
+author_email: lavrukhina.ad@gmail.com
+author_name: Anastasia Lavrukhina
+create_example_module: true
+module_name: flare_classifier
+preferred_linter: black
+project_name: flare-classifier
+use_isort: true

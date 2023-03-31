@@ -1,1 +1,1 @@
-from .example_module import *
+from .data_splitter import *

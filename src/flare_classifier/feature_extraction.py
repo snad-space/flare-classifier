@@ -1,4 +1,6 @@
 import light_curve as lc
+import numpy
+
 
 amplitude = lc.Amplitude()
 anderson_test = lc.AndersonDarlingNormal()

@@ -15,8 +15,8 @@ def data_splitter(dataframe: pd.DataFrame, train_size: float, test_size: float):
     test_tics = rng.choice(remained_tics, size=(int(test_size * n_tics)), replace=False)
     val_tics = list(set(remained_tics).symmetric_difference(test_tics))
 
-    train_data = dataframe[dataframe["TIC"].isin(train_tics)]
-    test_data = dataframe[dataframe["TIC"].isin(test_tics)]
-    val_data = dataframe[dataframe["TIC"].isin(val_tics)]
+    train_data = dataframe[dataframe['TIC'].isin(train_tics)].reset_index(drop=True)
+    test_data = dataframe[dataframe['TIC'].isin(test_tics)].reset_index(drop=True)
+    val_data = dataframe[dataframe['TIC'].isin(val_tics)].reset_index(drop=True)
 
     return train_data, test_data, val_data

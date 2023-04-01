@@ -2,7 +2,7 @@ import light_curve as lc
 
 amplitude = lc.Amplitude()
 anderson_test = lc.AndersonDarlingNormal()
-bazin_fit = lc.BazinFit()
+bazin_fit = lc.BazinFit(algorithm='mcmc')
 beyond_1_std = lc.BeyondNStd(1.0)
 beyond_2_std = lc.BeyondNStd(2.0)
 cusum = lc.Cusum()

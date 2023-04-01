@@ -58,22 +58,24 @@ extractor = lc.Extractor(*FEATURES_SET)
 
 
 def feature_extractor(dataframe):
-    t = dataframe['mjd'].to_numpy()
-    mag = dataframe['mag'].to_numpy()
-    magerr = dataframe['magerr'].to_numpy()
+    t = dataframe["mjd"].to_numpy()
+    mag = dataframe["mag"].to_numpy()
+    magerr = dataframe["magerr"].to_numpy()
 
     light_curves = list(map(tuple, np.stack([t, mag, magerr], axis=1)))
 
-    results = extractor.many(light_curves,
-                             n_jobs=-1,
-                             sorted=True,
-                             check=False, )
+    results = extractor.many(
+        light_curves,
+        n_jobs=-1,
+        sorted=True,
+        check=False,
+    )
 
     results_df = pd.DataFrame(results, columns=extractor.names)
     full_df = pd.concat([dataframe, results_df], axis=1)
 
     assert len(full_df) == len(dataframe)
 
-    full_df.drop(['bazin_fit_amplitude'], axis=1, inplace=True)
+    full_df.drop(["bazin_fit_amplitude"], axis=1, inplace=True)
 
     return full_df

@@ -1,5 +1,6 @@
 import light_curve as lc
 import numpy as np
+import pandas as pd
 
 
 amplitude = lc.Amplitude()

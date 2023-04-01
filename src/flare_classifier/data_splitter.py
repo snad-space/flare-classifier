@@ -10,7 +10,7 @@ def data_splitter(dataframe: pd.DataFrame, train_size: float, test_size: float):
     n_tics = len(unique_tics)
 
     train_tics = rng.choice(unique_tics, size=(int(train_size * n_tics)), replace=False)
-    remained_tics = list(set(train_tics).symmetric_difference(all_tic))
+    remained_tics = list(set(train_tics).symmetric_difference(unique_tics))
 
     test_tics = rng.choice(remained_tics, size=(int(test_size * n_tics)), replace=False)
     val_tics = list(set(remained_tics).symmetric_difference(test_tics))

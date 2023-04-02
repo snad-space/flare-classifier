@@ -19,4 +19,6 @@ def data_splitter(dataframe: pd.DataFrame, train_size: float, test_size: float):
     test_data = dataframe[dataframe["TIC"].isin(test_tics)].reset_index(drop=True)
     val_data = dataframe[dataframe["TIC"].isin(val_tics)].reset_index(drop=True)
 
+    assert len(dataframe) == len(train_data) + len(test_data) + len(val_data)
+
     return train_data, test_data, val_data

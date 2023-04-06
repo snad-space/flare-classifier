@@ -1,11 +1,23 @@
 import numpy as np
 import pandas as pd
-
-RANDOM_SEED = 42
-rng = np.random.default_rng(RANDOM_SEED)
+from typing import Union, Tuple
 
 
-def data_splitter(dataframe: pd.DataFrame, train_size: float, test_size: float):
+def data_splitter(
+    dataframe: pd.DataFrame,
+    *,
+    train_size: float,
+    test_size: float,
+    random_seed: Union[int, np.random.BitGenerator, np.random.Generator],
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    This function is intended to split the data frame with TESS flares to train / test / val samples
+    so that there are no objects with the same TIC in different samples. It is done in order the future
+    model will not over-trained to detect the templates.
+    """
+
+    rng = np.random.default_rng(random_seed)
+
     unique_tics = dataframe["TIC"].unique()
     n_tics = len(unique_tics)
 

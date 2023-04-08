@@ -60,7 +60,7 @@ FEATURES_SET = [
 extractor = lc.Extractor(*FEATURES_SET)
 
 
-def feature_extractor(dataframe):
+def feature_extractor(dataframe, *, n_jobs=-1):
     t = dataframe["mjd"].to_numpy()
     mag = dataframe["mag"].to_numpy()
     magerr = dataframe["magerr"].to_numpy()
@@ -69,7 +69,7 @@ def feature_extractor(dataframe):
 
     results = extractor.many(
         light_curves,
-        n_jobs=-1,
+        n_jobs=n_jobs,
         sorted=True,
         check=False,
     )

@@ -18,7 +18,7 @@ dependencies = [
     "deprecated",
     "ipykernel", # Support for Jupyter notebooks
     "numpy",
-    "pandas",
+    "pandas>=1.4.0",
     "light-curve"
 ]
 
@@ -41,9 +41,6 @@ dev = [
 requires = [
     "setuptools>=45", # Used to build and package the Python project
     "setuptools_scm>=6.2", # Gets release version from git. Makes it available programmatically
-    "numpy>=1.16",
-    "light-curve",
-    "pandas"
 ]
 build-backend = "setuptools.build_meta"
 

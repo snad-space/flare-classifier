@@ -62,46 +62,64 @@ def generate_datasets(
     Positive and negative classes in samples are balanced.
     Class label contains in column `is_flare`.
     """
+    positive_extension = positive_class_path.split(".")[1]
+    negative_extension = negative_class_path.split(".")[1]
 
-    positive_class = pd.read_csv(
-        positive_class_path,
-        converters={"mjd": array_from_string, "mag": array_from_string, "magerr": array_from_string},
-    )
-    negative_class = pd.read_csv(
-        negative_class_path,
-        converters={"mjd": array_from_string, "mag": array_from_string, "magerr": array_from_string},
-    )
+    if positive_extension == "csv":
+        positive_class = pd.read_csv(
+            positive_class_path,
+            converters={"mjd": array_from_string, "mag": array_from_string, "magerr": array_from_string},
+        )
+    elif positive_extension == "parquet":
+        positive_class = pd.read_parquet(positive_class_path)
+    else:
+        raise TypeError(f"Incorrect format: {positive_extension}")
+
+    if negative_extension == "csv":
+        negative_class = pd.read_csv(
+            negative_class_path,
+            converters={"mjd": array_from_string, "mag": array_from_string, "magerr": array_from_string},
+        )
+    elif negative_class_path == "parquet":
+        negative_class = pd.read_parquet(negative_class_path)
+    else:
+        raise TypeError(f"Incorrect format: {negative_extension}")
 
     rng = np.random.default_rng(random_seed)
 
     positive_class["is_flare"] = np.ones(len(positive_class))
     negative_class["is_flare"] = np.zeros(len(negative_class))
 
-    pos_class_features = feature_extractor(positive_class, n_jobs=n_jobs)
-    neg_class_features = feature_extractor(negative_class, n_jobs=n_jobs)
-
     pos_train, pos_test, pos_val = data_splitter(
-        pos_class_features, train_size=train_size, test_size=test_size, random_seed=rng
+        positive_class, train_size=train_size, test_size=test_size, random_seed=rng
     )
 
     # we expect our negative class data is bigger than positive
     train_len, test_len, val_len = len(pos_train), len(pos_test), len(pos_val)
 
     neg_train, neg_test, neg_val = (
-        neg_class_features[:train_len].reset_index(drop=True),
-        neg_class_features[train_len : train_len + test_len].reset_index(drop=True),
-        neg_class_features[train_len + test_len : train_len + test_len + val_len].reset_index(drop=True),
+        negative_class[:train_len].reset_index(drop=True),
+        negative_class[train_len : train_len + test_len].reset_index(drop=True),
+        negative_class[train_len + test_len : train_len + test_len + val_len].reset_index(drop=True),
     )
 
-    train_data = pd.concat([pos_train, neg_train], axis=0).sample(frac=1, random_state=rng)
-    test_data = pd.concat([pos_test, neg_test], axis=0).sample(frac=1, random_state=rng)
-    val_data = pd.concat([pos_val, neg_val], axis=0).sample(frac=1, random_state=rng)
+    train_data = (
+        pd.concat([pos_train, neg_train], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
+    )
+    test_data = (
+        pd.concat([pos_test, neg_test], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
+    )
+    val_data = pd.concat([pos_val, neg_val], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
 
     assert len(train_data) == len(pos_train) + len(neg_train)
     assert len(test_data) == len(pos_test) + len(neg_test)
     assert len(val_data) == len(pos_val) + len(neg_val)
 
+    train_features = feature_extractor(train_data, n_jobs=n_jobs)
+    test_features = feature_extractor(test_data, n_jobs=n_jobs)
+    val_features = feature_extractor(val_data, n_jobs=n_jobs)
+
     feature_names = extractor.names
     feature_names.remove("bazin_fit_amplitude")
 
-    return train_data, test_data, val_data, feature_names
+    return train_features, test_features, val_features, feature_names

@@ -2,3 +2,7 @@ outs:
 - md5: ad6651a6b602cfdef7e8baa8ed775d1e
   size: 1005283880
   path: lc_1M.parquet
+  cloud:
+    lpc:
+      etag: 803cabb6ae9d9db5786cdd4c46c70ef8-20
+      version_id: e4454834-41ee-458e-bafc-7db44ee42ab9

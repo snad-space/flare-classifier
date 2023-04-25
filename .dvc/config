@@ -1,0 +1,7 @@
+[core]
+    autostage = true
+    remote = lpc
+['remote "lpc"']
+    url = s3://flare-classifier
+    endpointurl = https://s3.lpc.snad.space
+    version_aware = true

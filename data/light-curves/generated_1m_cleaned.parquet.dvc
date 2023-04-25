@@ -1,0 +1,8 @@
+outs:
+- md5: c5189eff1fbb76d19c27973b2e34a0c0
+  size: 508424020
+  path: generated_1m_cleaned.parquet
+  cloud:
+    lpc:
+      etag: 31ab251b44352e5c91a33322ccde4a05-10
+      version_id: ac0fd7c1-9fe5-4551-865e-960d851c7419

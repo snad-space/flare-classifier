@@ -30,9 +30,10 @@ jobs:
         pip install .
         pip install .[dev]
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Run unit tests with pytest
-      run: |
-        python -m pytest tests --cov=flare_classifier --cov-report=xml
+#    We have no actual tests
+#    - name: Run unit tests with pytest
+#      run: |
+#        python -m pytest tests --cov=flare_classifier --cov-report=xml
     - name: Upload coverage report to codecov
       uses: codecov/codecov-action@v3
       with:

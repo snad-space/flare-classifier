@@ -2,7 +2,6 @@ import light_curve as lc
 import numpy as np
 import pandas as pd
 
-
 amplitude = lc.Amplitude()
 anderson_test = lc.AndersonDarlingNormal()
 bazin_fit = lc.BazinFit(algorithm="mcmc")

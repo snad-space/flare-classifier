@@ -1,2 +1,4 @@
 /generated_1m_cleaned.parquet
 /lc_1M.parquet
+/negative_class_iterpolator.parquet
+/positive_class_iterpolator.parquet

@@ -1,0 +1,98 @@
+stages:
+  prepare_datasets:
+    cmd: python src/flare_classifier/prepare_datasets.py data/light-curves/generated_1m_cleaned.parquet
+      data/light-curves/lc_1M.parquet
+    deps:
+    - src/flare_classifier/prepare_datasets.py
+    - data/light-curves/generated_1m_cleaned.parquet
+    - data/light-curves/lc_1M.parquet
+    params:
+    - prepare_datasets.train_size
+    - prepare_datasets.test_size
+    - prepare_datasets.seed
+    outs:
+    - data/prepared
+
+  train_rf:
+    cmd: python src/flare_classifier/train_rf.py data/prepared
+    params:
+    - train_rf.n_estimators
+    - train_rf.seed
+    deps:
+    - src/flare_classifier/train_rf.py
+    - src/flare_classifier/prepare_datasets.py
+    - data/prepared/train.parquet
+    - data/prepared/feature_names.csv
+    outs:
+    - models/random_forest/random_forest.pickle
+
+  train_catboost:
+    cmd: python src/flare_classifier/train_catboost.py data/prepared/
+    deps:
+    - src/flare_classifier/train_catboost.py
+    - src/flare_classifier/prepare_datasets.py
+    - data/prepared/train.parquet
+    - data/prepared/feature_names.csv
+    params:
+    - train_catboost.depth
+    - train_catboost.iterations
+    - train_catboost.learning_rate
+    - train_catboost.loss_function
+    - train_catboost.seed
+    outs:
+    - models/catboost/catboost.pickle
+
+  train_mlp:
+    cmd: python src/flare_classifier/train_mlp.py data/prepared/
+    deps:
+    - src/flare_classifier/train_mlp.py
+    - src/flare_classifier/prepare_datasets.py
+    - src/flare_classifier/mlp_model.py
+    - data/prepared/train.parquet
+    - data/prepared/val.parquet
+    - data/prepared/feature_names.csv
+    params:
+    - train_mlp.lr
+    - train_mlp.batch_size
+    - train_mlp.num_epochs
+    outs:
+    - models/mlp/mlp.pickle
+
+  evaluate_rf:
+    cmd: python src/flare_classifier/evaluate_rf.py models/random_forest/random_forest.pickle
+      data/prepared/
+    deps:
+    - src/flare_classifier/train_rf.py
+    - src/flare_classifier/evaluate_rf.py
+    - data/prepared/train.parquet
+    - data/prepared/test.parquet
+    - models/random_forest/random_forest.pickle
+    outs:
+    - metrics/random_forest/train_metrics.json
+    - metrics/random_forest/test_metrics.json
+
+  evaluate_catboost:
+    cmd: python src/flare_classifier/evaluate_catboost.py models/catboost/catboost.pickle
+      data/prepared/
+    deps:
+      - src/flare_classifier/train_catboost.py
+      - src/flare_classifier/evaluate_catboost.py
+      - data/prepared/train.parquet
+      - data/prepared/test.parquet
+      - models/catboost/catboost.pickle
+    outs:
+      - metrics/catboost/train_metrics.json
+      - metrics/catboost/test_metrics.json
+
+  evaluate_mlp:
+    cmd: python src/flare_classifier/evaluate_mlp.py models/mlp/mlp.pickle
+      data/prepared/
+    deps:
+      - src/flare_classifier/train_mlp.py
+      - src/flare_classifier/evaluate_mlp.py
+      - data/prepared/train.parquet
+      - data/prepared/test.parquet
+      - models/mlp/mlp.pickle
+    outs:
+      - metrics/mlp/train_metrics.json
+      - metrics/mlp/test_metrics.json

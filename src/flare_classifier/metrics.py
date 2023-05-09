@@ -20,6 +20,4 @@ def evaluate_metrics(model, true_labels, predict_labels, split):
     prc_file = os.path.join(prc_dir, f"{split}_metrics.json")
 
     with open(prc_file, "w") as fd:
-        json.dump(
-            {"prc": {"precision": precision, "recall": recall, "accuracy": accuracy, "f1_score": fscore}}, fd
-        )
+        json.dump({"prc": {"precision": precision, "recall": recall, "accuracy": accuracy, "f1_score": fscore}}, fd)

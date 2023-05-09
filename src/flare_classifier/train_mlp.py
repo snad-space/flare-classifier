@@ -59,9 +59,7 @@ def train(model, criterion, optimizer, num_epochs, total_step, train_dataloader,
 
             if i % 100 == 0:
                 accuracy, loss_val = calculate_accuracy(model, val_dataloader, criterion)
-                print(
-                    f"Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{total_step}], Train Loss: {loss.item():.4f}"
-                )
+                print(f"Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{total_step}], Train Loss: {loss.item():.4f}")
                 print(f"Val accuracy: {accuracy}, Val loss: {loss_val}")
 
     return 1

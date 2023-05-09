@@ -1,4 +1,6 @@
 import ast
+from typing import List, Tuple, Union
+
 import numpy as np
 import pandas as pd
 from typing import Union, Tuple, List
@@ -103,12 +105,8 @@ def generate_datasets(
         negative_class[train_len + test_len : train_len + test_len + val_len].reset_index(drop=True),
     )
 
-    train_data = (
-        pd.concat([pos_train, neg_train], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
-    )
-    test_data = (
-        pd.concat([pos_test, neg_test], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
-    )
+    train_data = pd.concat([pos_train, neg_train], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
+    test_data = pd.concat([pos_test, neg_test], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
     val_data = pd.concat([pos_val, neg_val], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
 
     assert len(train_data) == len(pos_train) + len(neg_train)

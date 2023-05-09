@@ -61,5 +61,5 @@ batch_size = 1024
 test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
 
-evaluate_metrics("mlp", *eval_mlp(model, test_dataloader), "test")
-evaluate_metrics("mlp", *eval_mlp(model, train_dataloader), "train")
+evaluate_metrics("mlp", *eval_mlp(model.cpu(), test_dataloader), "test")
+evaluate_metrics("mlp", *eval_mlp(model.cpu(), train_dataloader), "train")

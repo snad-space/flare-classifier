@@ -3,8 +3,8 @@ from typing import List, Tuple, Union
 
 import numpy as np
 import pandas as pd
-
-from .feature_extraction import *
+from typing import Union, Tuple, List
+from feature_extraction import *
 
 
 def data_splitter(
@@ -82,7 +82,7 @@ def generate_datasets(
             negative_class_path,
             converters={"mjd": array_from_string, "mag": array_from_string, "magerr": array_from_string},
         )
-    elif negative_class_path == "parquet":
+    elif negative_extension == "parquet":
         negative_class = pd.read_parquet(negative_class_path)
     else:
         raise TypeError(f"Incorrect format: {negative_extension}")
@@ -114,8 +114,13 @@ def generate_datasets(
     assert len(val_data) == len(pos_val) + len(neg_val)
 
     train_features = feature_extractor(train_data, n_jobs=n_jobs)
+    print("train features extracted")
+
     test_features = feature_extractor(test_data, n_jobs=n_jobs)
+    print("test features extracted")
+
     val_features = feature_extractor(val_data, n_jobs=n_jobs)
+    print("val features extracted")
 
     feature_names = extractor.names
     feature_names.remove("bazin_fit_amplitude")

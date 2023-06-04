@@ -11,8 +11,8 @@ stages:
       md5: ad6651a6b602cfdef7e8baa8ed775d1e
       size: 1005283880
     - path: src/flare_classifier/prepare_datasets.py
-      md5: 09e0f658301e0750901d23a6a4e19226
-      size: 1592
+      md5: 6bb9a2a4f799c2b90d6e2d72e08e1081
+      size: 1792
     params:
       params.yaml:
         prepare_datasets.seed: 221
@@ -20,9 +20,9 @@ stages:
         prepare_datasets.train_size: 0.75
     outs:
     - path: data/prepared
-      md5: ea7ceb516c35c5e0faa6db1f4ba69cb2.dir
-      size: 1150530580
-      nfiles: 4
+      md5: 4279395312718d86135704a32c1890c5.dir
+      size: 1150531595
+      nfiles: 5
   train_rf:
     cmd: python src/flare_classifier/train_rf.py data/prepared
     deps:
@@ -30,11 +30,11 @@ stages:
       md5: c11a4b614257ee8136a5c043f363018d
       size: 544
     - path: data/prepared/train.parquet
-      md5: eb924af9d29f2894ca85f485e68d84f8
+      md5: b0ec1f965f06dbd88ced2c03c715b6d2
       size: 863256885
     - path: src/flare_classifier/prepare_datasets.py
-      md5: 09e0f658301e0750901d23a6a4e19226
-      size: 1592
+      md5: 6bb9a2a4f799c2b90d6e2d72e08e1081
+      size: 1792
     - path: src/flare_classifier/train_rf.py
       md5: f5a38ff857ad475339c29596bb8001a3
       size: 1049
@@ -44,7 +44,7 @@ stages:
         train_rf.seed: 42
     outs:
     - path: models/random_forest/random_forest.pickle
-      md5: 42fab7b3aef3ea6f7aa2deb4b5811cd5
+      md5: 54bb0a6f9fb68b6fcc680a9a7e935190
       size: 404177920
   train_catboost:
     cmd: python src/flare_classifier/train_catboost.py data/prepared/
@@ -53,11 +53,11 @@ stages:
       md5: c11a4b614257ee8136a5c043f363018d
       size: 544
     - path: data/prepared/train.parquet
-      md5: eb924af9d29f2894ca85f485e68d84f8
+      md5: b0ec1f965f06dbd88ced2c03c715b6d2
       size: 863256885
     - path: src/flare_classifier/prepare_datasets.py
-      md5: 09e0f658301e0750901d23a6a4e19226
-      size: 1592
+      md5: 6bb9a2a4f799c2b90d6e2d72e08e1081
+      size: 1792
     - path: src/flare_classifier/train_catboost.py
       md5: 5e8ad212b1bb049eb7e8477ed93ea40b
       size: 1164
@@ -70,8 +70,8 @@ stages:
         train_catboost.seed: 42
     outs:
     - path: models/catboost/catboost.pickle
-      md5: 0485fed8111c9da6d2403eee46770c1d
-      size: 5627081
+      md5: 438d788875e421f36fafead8a7747550
+      size: 5626641
   train_mlp:
     cmd: python src/flare_classifier/train_mlp.py data/prepared/
     deps:
@@ -79,45 +79,45 @@ stages:
       md5: c11a4b614257ee8136a5c043f363018d
       size: 544
     - path: data/prepared/train.parquet
-      md5: eb924af9d29f2894ca85f485e68d84f8
+      md5: b0ec1f965f06dbd88ced2c03c715b6d2
       size: 863256885
     - path: data/prepared/val.parquet
-      md5: 026bc10550d7747867a751abe846299a
+      md5: be0fe2161b6f0d0eab1d72a6f3494990
       size: 104890185
     - path: src/flare_classifier/mlp_model.py
-      md5: 59d6d7c6934a0d2954e83a955f8ea86a
-      size: 1415
+      md5: 43587811c5951e16b0052b1c7e7ad3fc
+      size: 1497
     - path: src/flare_classifier/prepare_datasets.py
-      md5: 09e0f658301e0750901d23a6a4e19226
-      size: 1592
+      md5: 6bb9a2a4f799c2b90d6e2d72e08e1081
+      size: 1792
     - path: src/flare_classifier/train_mlp.py
-      md5: 1609be05d55333b322a873bcf92b81ea
-      size: 3499
+      md5: e6375db2a4653c6d10fa13e1b2e95d23
+      size: 4078
     params:
       params.yaml:
         train_mlp.batch_size: 1024
         train_mlp.lr: 0.001
-        train_mlp.num_epochs: 50
+        train_mlp.num_epochs: 150
     outs:
     - path: models/mlp/mlp.pickle
-      md5: c19a81277060ecc4b525c3486bca3b29
-      size: 908512
+      md5: b8e93a34f8c73ae8f395ab8c49f0d5b2
+      size: 895931
   evaluate_rf:
     cmd: python src/flare_classifier/evaluate_rf.py models/random_forest/random_forest.pickle
       data/prepared/
     deps:
     - path: data/prepared/test.parquet
-      md5: d5f2ff1becd0404f46fbd4fe10c21a6d
+      md5: 97bf9da893cfb485f4462a45b6d110b3
       size: 182382966
     - path: data/prepared/train.parquet
-      md5: eb924af9d29f2894ca85f485e68d84f8
+      md5: b0ec1f965f06dbd88ced2c03c715b6d2
       size: 863256885
     - path: models/random_forest/random_forest.pickle
-      md5: 42fab7b3aef3ea6f7aa2deb4b5811cd5
+      md5: 54bb0a6f9fb68b6fcc680a9a7e935190
       size: 404177920
     - path: src/flare_classifier/evaluate_rf.py
-      md5: 2fd1637edeea47be47a6cc784615400e
-      size: 1064
+      md5: 1cff02ac42e6d8d3aeb3bc4dcf20035a
+      size: 1065
     - path: src/flare_classifier/train_rf.py
       md5: f5a38ff857ad475339c29596bb8001a3
       size: 1049
@@ -133,49 +133,49 @@ stages:
       data/prepared/
     deps:
     - path: data/prepared/test.parquet
-      md5: d5f2ff1becd0404f46fbd4fe10c21a6d
+      md5: 97bf9da893cfb485f4462a45b6d110b3
       size: 182382966
     - path: data/prepared/train.parquet
-      md5: eb924af9d29f2894ca85f485e68d84f8
+      md5: b0ec1f965f06dbd88ced2c03c715b6d2
       size: 863256885
     - path: models/catboost/catboost.pickle
-      md5: 0485fed8111c9da6d2403eee46770c1d
-      size: 5627081
+      md5: 438d788875e421f36fafead8a7747550
+      size: 5626641
     - path: src/flare_classifier/evaluate_catboost.py
-      md5: c54a83ce1a907b321673c2a5c9fa74a7
-      size: 1054
+      md5: c70376eb8733634cd788e6978e6e2603
+      size: 1055
     - path: src/flare_classifier/train_catboost.py
       md5: 5e8ad212b1bb049eb7e8477ed93ea40b
       size: 1164
     outs:
     - path: metrics/catboost/test_metrics.json
-      md5: 5c759bd45c46f05bf0c369ae9cf0deef
+      md5: f77fe61abe1dbe4f2f3c2a3b3b964917
       size: 136
     - path: metrics/catboost/train_metrics.json
-      md5: 47004d86f5cad84a46e39ef41b1fdd6a
-      size: 136
+      md5: 49eedb6324de25a2ea625567ea63210e
+      size: 133
   evaluate_mlp:
     cmd: python src/flare_classifier/evaluate_mlp.py models/mlp/mlp.pickle data/prepared/
     deps:
     - path: data/prepared/test.parquet
-      md5: d5f2ff1becd0404f46fbd4fe10c21a6d
+      md5: 97bf9da893cfb485f4462a45b6d110b3
       size: 182382966
     - path: data/prepared/train.parquet
-      md5: eb924af9d29f2894ca85f485e68d84f8
+      md5: b0ec1f965f06dbd88ced2c03c715b6d2
       size: 863256885
     - path: models/mlp/mlp.pickle
-      md5: c19a81277060ecc4b525c3486bca3b29
-      size: 908512
+      md5: b8e93a34f8c73ae8f395ab8c49f0d5b2
+      size: 895931
     - path: src/flare_classifier/evaluate_mlp.py
-      md5: 7e71eb9313be8925280c000eaa96b9b9
-      size: 1832
+      md5: 0d06703d3e5f12ee7867a4938b47eff0
+      size: 1950
     - path: src/flare_classifier/train_mlp.py
-      md5: 1609be05d55333b322a873bcf92b81ea
-      size: 3499
+      md5: e6375db2a4653c6d10fa13e1b2e95d23
+      size: 4078
     outs:
     - path: metrics/mlp/test_metrics.json
-      md5: aa22ac98ba4b27afc5ca416f3cd32ecb
+      md5: f5267ba207601df358378742d3824d84
       size: 128
     - path: metrics/mlp/train_metrics.json
-      md5: 8a7ec9e3acd2b6571c7349d668fef9c2
+      md5: bbf1a34bf529aecb4cb6e32f705c0afc
       size: 129

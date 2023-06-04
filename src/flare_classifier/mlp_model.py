@@ -32,9 +32,9 @@ class BinaryClassification(nn.Module):
 
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout(p=0.25)
-        self.batchnorm1 = nn.BatchNorm1d(300)
-        self.batchnorm2 = nn.BatchNorm1d(300)
-        self.batchnorm3 = nn.BatchNorm1d(400)
+        self.batchnorm1 = nn.BatchNorm1d(300, track_running_stats=False)
+        self.batchnorm2 = nn.BatchNorm1d(300, track_running_stats=False)
+        self.batchnorm3 = nn.BatchNorm1d(400, track_running_stats=False)
 
     def forward(self, inputs):
         x = self.relu(self.layer_1(inputs))

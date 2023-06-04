@@ -49,7 +49,11 @@ features_file = open(features, "r")
 features_names = list(csv.reader(features_file, delimiter=","))[0]
 
 with open(model_file, "rb") as fd:
-    model = torch.load(fd)
+    model_dict = torch.load(fd)
+    
+model = BinaryClassification(len(features_names))
+model.load_state_dict(model_dict)
+model.eval()
 
 train_data = pd.read_parquet(train_path)
 test_data = pd.read_parquet(test_path)

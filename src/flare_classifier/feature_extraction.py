@@ -78,6 +78,6 @@ def feature_extractor(dataframe, *, n_jobs=-1):
 
     assert len(full_df) == len(dataframe)
 
-    full_df.drop(["bazin_fit_amplitude"], axis=1, inplace=True)
+    full_df.drop(["bazin_fit_amplitude", "bazin_fit_reference_time"], axis=1, inplace=True)
 
     return full_df

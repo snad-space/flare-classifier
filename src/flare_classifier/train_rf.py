@@ -2,10 +2,9 @@ import os
 import pickle
 import sys
 import csv
-
-import numpy as np
-import pandas as pd
 import yaml
+
+import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
 params = yaml.safe_load(open("params.yaml"))["train_rf"]
@@ -28,7 +27,7 @@ features_names = list(csv.reader(features_file, delimiter=","))[0]
 
 X_train, y_train = train_data[features_names], train_data["is_flare"]
 
-clf = RandomForestClassifier(n_estimators=n_estimators, random_state=seed, n_jobs=-1)
+clf = RandomForestClassifier(n_estimators=n_estimators, random_state=seed)
 clf.fit(X_train, y_train)
 
 output = os.path.join("models", "random_forest")

@@ -10,12 +10,12 @@ train_rf:
 train_catboost:
   iterations: 10000
   depth: 5
-  learning_rate: 0.01
+  learning_rate: 0.001
   loss_function: 'Logloss'
   seed: 42
 
 train_mlp:
   lr: 0.001
   batch_size: 1024
-  num_epochs: 50
+  num_epochs: 150
 

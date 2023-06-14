@@ -1,5 +1,11 @@
 # flare-classifier
 
+## Project description
+
+This repository is dedicated to the work related to the search for red dwarf flares using machine learning techniques.
+The task was reformulated as a binary classification problem, where label 1 indicates flare event, 0 – other events. 
+Three models of classificators based on features extracted from light curve were trained: Random forest, CatBoost and MLP.
+
 ### Data Version Control
 
 [DVC](https://dvc.org), Data Version Control, is a useful tool for data versioning with git. We use it with our S3-compatible storage available at s3.lpc.snad.space
@@ -25,6 +31,21 @@ Steps to setup `aws-cli` before using `dvc` with our remote.
 6. `git push`
 
 Do not forget to `dvc push` when `git push` (maybe we need git post-commit hook for this?).
+
+### How to run demo DVC pipeline
+
+To run a pipeline use `dvc repro` command in main repo. 
+The pipeline consists of several stages:
+
+- prepare_datasets: feature extraction process, raw data combines to train/val/test samples.
+- train_rf: training process of Random Forest model.
+- train_catboost: training process of CatBoost model.
+- train_mlp: training process of MLP model.
+- evaluate_rf: Random Forest evaluation
+- evaluate_catboost: CatBoost evaluation
+- evaluate_mlp: MLP evaluation
+
+All metrics and metadata placed in `metrics` folder and respective subfolder after pipeline execution.
 
 ### LINCC-Frameworks Python Project Template
 

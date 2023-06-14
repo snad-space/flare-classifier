@@ -124,5 +124,6 @@ def generate_datasets(
 
     feature_names = extractor.names
     feature_names.remove("bazin_fit_amplitude")
+    feature_names.remove("bazin_fit_reference_time")
 
     return train_features, test_features, val_features, feature_names

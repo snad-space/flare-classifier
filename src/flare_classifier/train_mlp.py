@@ -1,5 +1,4 @@
 import os
-import pickle
 import sys
 import csv
 
@@ -10,9 +9,7 @@ import pandas as pd
 import yaml
 import torch
 
-from sklearn.preprocessing import StandardScaler
 from torch import nn
-from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
 
 
@@ -35,6 +32,10 @@ def calculate_accuracy(model, data_loader, criterion):
         total += labels.size(0)
 
     return correct / total, loss.item() / len(data_loader)
+
+
+score_train = []
+score_val = []
 
 
 def train(model, criterion, optimizer, num_epochs, total_step, train_dataloader, val_dataloader):
@@ -62,7 +63,10 @@ def train(model, criterion, optimizer, num_epochs, total_step, train_dataloader,
                 print(f"Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{total_step}], Train Loss: {loss.item():.4f}")
                 print(f"Val accuracy: {accuracy}, Val loss: {loss_val}")
 
-    return 1
+        accuracy, loss_val = calculate_accuracy(model, val_dataloader, criterion)
+
+        score_train.append([ep_loss / len(train_dataloader), correct / total])
+        score_val.append([accuracy, loss_val])
 
 
 params = yaml.safe_load(open("params.yaml"))["train_mlp"]
@@ -116,7 +120,18 @@ train(
 output = os.path.join("models", "mlp")
 os.makedirs(output, exist_ok=True)
 
+metrics_train = os.path.join(output, "train_metrics.csv")
+metrics_val = os.path.join(output, "val_metrics.csv")
+
 output = os.path.join(output, "mlp.pickle")
 
 with open(output, "wb") as fd:
-    torch.save(model, fd)
+    torch.save(model.state_dict(), fd)
+
+with open(metrics_train, "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(score_train)
+
+with open(metrics_val, "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(score_val)

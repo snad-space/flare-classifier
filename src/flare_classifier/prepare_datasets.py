@@ -1,5 +1,5 @@
 import os
-import random
+import pickle
 import sys
 import csv
 
@@ -24,10 +24,12 @@ rng = np.random.default_rng(params["seed"])
 positive_class = sys.argv[1]
 negative_class = sys.argv[2]
 
-output_train = os.path.join("data", "prepared", "train.parquet")
-output_test = os.path.join("data", "prepared", "test.parquet")
-output_val = os.path.join("data", "prepared", "val.parquet")
-output_features = os.path.join("data", "prepared", "feature_names.csv")
+folder = os.path.join("data", "prepared")
+output_train = os.path.join(folder, "train.parquet")
+output_test = os.path.join(folder, "test.parquet")
+output_val = os.path.join(folder, "val.parquet")
+output_features = os.path.join(folder, "feature_names.csv")
+output_scaler = os.path.join(folder, "scaler.pickle")
 
 train_features, test_features, val_features, feature_names = generate_datasets(
     positive_class, negative_class, train_size=train_size, test_size=test_size, random_seed=rng
@@ -48,3 +50,6 @@ with open(output_features, "w") as f:
     write = csv.writer(f)
 
     write.writerow(feature_names)
+
+with open(output_scaler, "wb") as f:
+    pickle.dump(scaler, f)

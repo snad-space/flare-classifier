@@ -1,6 +1,6 @@
 stages:
   prepare_datasets:
-    cmd: python src/flare_classifier/prepare_datasets.py data/light-curves/positive_demo.csv
+    cmd: python3 src/flare_classifier/prepare_datasets.py data/light-curves/positive_demo.csv
       data/light-curves/negative_demo.csv
     deps:
     - src/flare_classifier/prepare_datasets.py
@@ -14,7 +14,7 @@ stages:
     - data/prepared
 
   train_rf:
-    cmd: python src/flare_classifier/train_rf.py data/prepared
+    cmd: python3 src/flare_classifier/train_rf.py data/prepared
     params:
     - train_rf.n_estimators
     - train_rf.seed
@@ -27,7 +27,7 @@ stages:
     - models/random_forest/random_forest.pickle
 
   train_catboost:
-    cmd: python src/flare_classifier/train_catboost.py data/prepared/
+    cmd: python3 src/flare_classifier/train_catboost.py data/prepared/
     deps:
     - src/flare_classifier/train_catboost.py
     - src/flare_classifier/prepare_datasets.py
@@ -43,7 +43,7 @@ stages:
     - models/catboost/catboost.pickle
 
   train_mlp:
-    cmd: python src/flare_classifier/train_mlp.py data/prepared/
+    cmd: python3 src/flare_classifier/train_mlp.py data/prepared/
     deps:
     - src/flare_classifier/train_mlp.py
     - src/flare_classifier/prepare_datasets.py
@@ -59,7 +59,7 @@ stages:
     - models/mlp/mlp.pickle
 
   evaluate_rf:
-    cmd: python src/flare_classifier/evaluate_rf.py models/random_forest/random_forest.pickle
+    cmd: python3 src/flare_classifier/evaluate_rf.py models/random_forest/random_forest.pickle
       data/prepared/ data/light-curves/real_flares_test.csv
     deps:
     - src/flare_classifier/metrics.py
@@ -74,7 +74,7 @@ stages:
     - metrics/random_forest/test_metrics.json
 
   evaluate_catboost:
-    cmd: python src/flare_classifier/evaluate_catboost.py models/catboost/catboost.pickle
+    cmd: python3 src/flare_classifier/evaluate_catboost.py models/catboost/catboost.pickle
       data/prepared/ data/light-curves/real_flares_test.csv
     deps:
       - src/flare_classifier/metrics.py
@@ -89,7 +89,7 @@ stages:
       - metrics/catboost/test_metrics.json
 
   evaluate_mlp:
-    cmd: python src/flare_classifier/evaluate_mlp.py models/mlp/mlp.pickle
+    cmd: python3 src/flare_classifier/evaluate_mlp.py models/mlp/mlp.pickle
       data/prepared/ data/light-curves/real_flares_test.csv
     deps:
       - src/flare_classifier/metrics.py

@@ -60,12 +60,14 @@ stages:
 
   evaluate_rf:
     cmd: python src/flare_classifier/evaluate_rf.py models/random_forest/random_forest.pickle
-      data/prepared/
+      data/prepared/ data/light-curves/real_flares_test.csv
     deps:
+    - src/flare_classifier/metrics.py
     - src/flare_classifier/train_rf.py
     - src/flare_classifier/evaluate_rf.py
     - data/prepared/train.parquet
     - data/prepared/test.parquet
+    - data/light-curves/real_flares_test.csv
     - models/random_forest/random_forest.pickle
     outs:
     - metrics/random_forest/train_metrics.json
@@ -73,12 +75,14 @@ stages:
 
   evaluate_catboost:
     cmd: python src/flare_classifier/evaluate_catboost.py models/catboost/catboost.pickle
-      data/prepared/
+      data/prepared/ data/light-curves/real_flares_test.csv
     deps:
+      - src/flare_classifier/metrics.py
       - src/flare_classifier/train_catboost.py
       - src/flare_classifier/evaluate_catboost.py
       - data/prepared/train.parquet
       - data/prepared/test.parquet
+      - data/light-curves/real_flares_test.csv
       - models/catboost/catboost.pickle
     outs:
       - metrics/catboost/train_metrics.json
@@ -86,12 +90,14 @@ stages:
 
   evaluate_mlp:
     cmd: python src/flare_classifier/evaluate_mlp.py models/mlp/mlp.pickle
-      data/prepared/
+      data/prepared/ data/light-curves/real_flares_test.csv
     deps:
+      - src/flare_classifier/metrics.py
       - src/flare_classifier/train_mlp.py
       - src/flare_classifier/evaluate_mlp.py
       - data/prepared/train.parquet
       - data/prepared/test.parquet
+      - data/light-curves/real_flares_test.csv
       - models/mlp/mlp.pickle
     outs:
       - metrics/mlp/train_metrics.json

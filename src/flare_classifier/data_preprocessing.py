@@ -102,13 +102,13 @@ def generate_datasets(
     neg_train, neg_test, neg_val = (
         negative_class[:train_len].reset_index(drop=True),
         negative_class[train_len : train_len + test_len].reset_index(drop=True),
-        negative_class[train_len + test_len : train_len + test_len + val_len].reset_index(drop=True),
+        negative_class[train_len + test_len : train_len + test_len + val_len].reset_index(drop=True)
     )
 
     train_data = pd.concat([pos_train, neg_train], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
     test_data = pd.concat([pos_test, neg_test], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
     val_data = pd.concat([pos_val, neg_val], axis=0).sample(frac=1, random_state=rng).reset_index(drop=True)
-
+    
     assert len(train_data) == len(pos_train) + len(neg_train)
     assert len(test_data) == len(pos_test) + len(neg_test)
     assert len(val_data) == len(pos_val) + len(neg_val)
@@ -124,5 +124,6 @@ def generate_datasets(
 
     feature_names = extractor.names
     feature_names.remove("bazin_fit_amplitude")
+    feature_names.remove("bazin_fit_reference_time")
 
     return train_features, test_features, val_features, feature_names

@@ -45,7 +45,7 @@ The pipeline consists of several stages:
 - evaluate_catboost: CatBoost evaluation
 - evaluate_mlp: MLP evaluation
 
-All metrics and meta-data placed in `metrics` folder after pipeline execution.
+All metrics and metadata placed in `metrics` folder and respective subfolder after pipeline execution.
 
 ### LINCC-Frameworks Python Project Template
 

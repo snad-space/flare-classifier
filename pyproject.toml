@@ -19,7 +19,13 @@ dependencies = [
     "ipykernel", # Support for Jupyter notebooks
     "numpy",
     "pandas>=1.4.0",
-    "light-curve"
+    "light-curve",
+    "scikit-learn",
+    "pyarrow",
+    "torch",
+    "torchvision",
+    "matplotlib",
+    "catboost",
 ]
 
 # On a mac, install optional dependencies with `pip install '.[dev]'` (include the single quotes)
@@ -33,6 +39,7 @@ dev = [
     "sphinx_rtd_theme==1.2.0", # Used to render documentation
     "sphinx-autoapi==2.0.1", # Used to automatically generate api documentation
     "black", # Used for static linting of files
+    "dvc[s3]",
 ]
 
 [build-system]

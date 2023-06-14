@@ -4,7 +4,6 @@ import sys
 import csv
 import json
 
-import numpy as np
 import pandas as pd
 import yaml
 from catboost import CatBoostClassifier
@@ -37,22 +36,20 @@ X_train, y_train = train_data[features_names], train_data["is_flare"]
 X_val, y_val = val_data[features_names], val_data["is_flare"]
 
 clf = CatBoostClassifier(
-    iterations=iter, 
-    depth=depth, 
-    learning_rate=lr, 
-    loss_function=loss_func, 
-    random_seed=seed, 
-    verbose=True, 
-    eval_metric='Precision'
+    iterations=iter,
+    depth=depth,
+    learning_rate=lr,
+    loss_function=loss_func,
+    random_seed=seed,
+    verbose=True,
+    eval_metric="Precision",
 )
 
 output = os.path.join("models", "catboost")
 os.makedirs(output, exist_ok=True)
 output = os.path.join(output, "catboost.pickle")
 
-clf.fit(X_train,
-        y_train,
-        eval_set=(X_val, y_val))
+clf.fit(X_train, y_train, eval_set=(X_val, y_val))
 
 train_curve = clf.get_evals_result()
 curve_path = os.path.join("models", "catboost", "train_curve.json")

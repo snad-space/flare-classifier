@@ -2,7 +2,6 @@ from metrics import *
 from mlp_model import *
 from thr_optimize import *
 
-import math
 import os
 import pickle
 import sys
@@ -11,7 +10,6 @@ import torch
 import numpy as np
 
 import pandas as pd
-from matplotlib import pyplot as plt
 from torch.utils.data import DataLoader
 
 
@@ -31,12 +29,12 @@ def eval_mlp(model, dataloader, probs=False, thr=0.5):
                 test_pred.extend(y_test_pred.numpy().squeeze())
             else:
                 test_pred.extend(y_pred_tag.numpy().squeeze())
-                
+
             test_true.extend(labels.numpy())
-            
+
     predict = np.array(test_pred)
     y_true = np.array(test_true)
-    
+
     return y_true, predict
 
 
@@ -56,7 +54,7 @@ features_names = list(csv.reader(features_file, delimiter=","))[0]
 
 with open(model_file, "rb") as fd:
     model_dict = torch.load(fd)
-    
+
 model = BinaryClassification(len(features_names))
 model.load_state_dict(model_dict)
 model.eval()
@@ -87,8 +85,8 @@ val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 real_flares_dataloader = DataLoader(real_flares_dataset, batch_size=100, shuffle=False)
 
 y_val, val_probs = eval_mlp(model.cpu(), val_dataloader, probs=True)
-opt_thr = optimal_threshold(val_probs, y_val) 
-print(f'optimal threshold: {opt_thr}')
+opt_thr = optimal_threshold(val_probs, y_val)
+print(f"optimal threshold: {opt_thr}")
 
 evaluate_metrics("mlp", *eval_mlp(model.cpu(), test_dataloader, thr=opt_thr), "test")
 evaluate_metrics("mlp", *eval_mlp(model.cpu(), train_dataloader, thr=opt_thr), "train")

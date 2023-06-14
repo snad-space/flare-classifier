@@ -50,6 +50,6 @@ with open(output_features, "w") as f:
     write = csv.writer(f)
 
     write.writerow(feature_names)
-    
+
 with open(output_scaler, "wb") as f:
     pickle.dump(scaler, f)

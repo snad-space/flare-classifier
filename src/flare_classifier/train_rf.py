@@ -2,9 +2,9 @@ import os
 import pickle
 import sys
 import csv
+import yaml
 
 import pandas as pd
-import yaml
 from sklearn.ensemble import RandomForestClassifier
 
 params = yaml.safe_load(open("params.yaml"))["train_rf"]

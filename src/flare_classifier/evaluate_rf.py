@@ -36,21 +36,21 @@ X_test, y_test = test_data[features_names], test_data["is_flare"]
 X_val, y_val = val_data[features_names], val_data["is_flare"]
 X_real, y_real = real_flares[features_names], real_flares["is_flare"]
 
-thr = optimal_threshold(model.predict_proba(X_val)[:, 1], y_val) 
-print(f'optimal threshold: {thr}')
+thr = optimal_threshold(model.predict_proba(X_val)[:, 1], y_val)
+print(f"optimal threshold: {thr}")
 
 scaler_path = os.path.join(sys.argv[2], "scaler.pickle")
 
 with open(scaler_path, "rb") as fd:
     scaler = pickle.load(fd)
 
-train_pred = (model.predict_proba(X_train)[:, 1] > thr).astype('int')
-test_pred = (model.predict_proba(X_test)[:, 1] > thr).astype('int')
+train_pred = (model.predict_proba(X_train)[:, 1] > thr).astype("int")
+test_pred = (model.predict_proba(X_test)[:, 1] > thr).astype("int")
 
 X_real = pd.DataFrame(scaler.transform(X_real), columns=features_names)
 real_pred = model.predict_proba(X_real)
 
 evaluate_metrics("random_forest", y_train, train_pred, "train")
 evaluate_metrics("random_forest", y_test, test_pred, "test")
-evaluate_metrics("random_forest", y_real, (real_pred[:, 1] > thr).astype('int'), "real")
-evaluate_real("random_forest",  y_real, real_pred[:, 1])
+evaluate_metrics("random_forest", y_real, (real_pred[:, 1] > thr).astype("int"), "real")
+evaluate_real("random_forest", y_real, real_pred[:, 1])

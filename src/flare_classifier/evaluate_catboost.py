@@ -7,7 +7,6 @@ import sys
 import csv
 
 import pandas as pd
-import numpy as np
 
 if len(sys.argv) != 4:
     sys.stderr.write("Arguments error. Usage:\n")
@@ -40,19 +39,19 @@ scaler_path = os.path.join(sys.argv[2], "scaler.pickle")
 
 with open(scaler_path, "rb") as fd:
     scaler = pickle.load(fd)
-    
-X_real = pd.DataFrame(scaler.transform(X_real), columns=features_names)    
 
-thr = optimal_threshold(model.predict(X_val, prediction_type='Probability')[:, 1], y_val) 
+X_real = pd.DataFrame(scaler.transform(X_real), columns=features_names)
+
+thr = optimal_threshold(model.predict(X_val, prediction_type="Probability")[:, 1], y_val)
 model.set_probability_threshold(thr)
-print(f'optimal threshold: {thr}')
+print(f"optimal threshold: {thr}")
 
 train_pred = model.predict(X_train)
 test_pred = model.predict(X_test)
-real_pred = model.predict(X_real, prediction_type='Probability')
+real_pred = model.predict(X_real, prediction_type="Probability")
 real_pred_label = model.predict(X_real)
 
 evaluate_metrics("catboost", y_train, train_pred, "train")
 evaluate_metrics("catboost", y_test, test_pred, "test")
 evaluate_metrics("catboost", y_real, real_pred_label, "real")
-evaluate_real("catboost",  y_real, real_pred[:, 1])
+evaluate_real("catboost", y_real, real_pred[:, 1])

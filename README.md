@@ -3,7 +3,7 @@
 ## Project description
 
 This repository is dedicated to the work related to the search for red dwarf flares using machine learning techniques.
-The task was reformulated as a binary classification problem, where label 1 indicates flare event, 0 – other events. 
+The task was reformulated as a binary classification problem, where label 1 indicates a flare event, 0 – other events. 
 Three models of classificators based on features extracted from light curve were trained: Random forest, CatBoost and MLP.
 
 ### Data Version Control

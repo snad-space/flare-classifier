@@ -1,11 +1,11 @@
 stages:
   prepare_datasets:
-    cmd: python src/flare_classifier/prepare_datasets.py data/light-curves/generated_1m_cleaned.parquet
-      data/light-curves/lc_1M.parquet
+    cmd: python src/flare_classifier/prepare_datasets.py data/light-curves/positive_demo.csv
+      data/light-curves/negative_demo.csv
     deps:
     - src/flare_classifier/prepare_datasets.py
-    - data/light-curves/generated_1m_cleaned.parquet
-    - data/light-curves/lc_1M.parquet
+    - data/light-curves/positive_demo.csv
+    - data/light-curves/negative_demo.csv
     params:
     - prepare_datasets.train_size
     - prepare_datasets.test_size

@@ -37,10 +37,10 @@ Do not forget to `dvc push` when `git push` (maybe we need git post-commit hook 
 To run a pipeline use `dvc repro` command in main repo. 
 The pipeline consists of several stages:
 
-- prepare_datasets: feature extraction process, raw data combines to train/val/test samples.
-- train_rf: training process of Random Forest model.
-- train_catboost: training process of CatBoost model.
-- train_mlp: training process of MLP model.
+- prepare_datasets: feature extraction process, raw data combines to train/val/test samples
+- train_rf: training process of Random Forest model
+- train_catboost: training process of CatBoost model
+- train_mlp: training process of MLP model
 - evaluate_rf: Random Forest evaluation
 - evaluate_catboost: CatBoost evaluation
 - evaluate_mlp: MLP evaluation

@@ -11,7 +11,7 @@ Three models of classificators based on features extracted from light curve were
 ```
 python3 -mvenv venv
 source venv/bin/activate
-python3 -mpip install requirements.txt
+python3 -mpip install -r requirements.txt
 python3 -mpip install dvc
 python3 -mdvc repro
 ```

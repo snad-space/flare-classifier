@@ -1,0 +1,5 @@
+outs:
+- md5: 8716dc5b928329c0699ee0e993d8dde8
+  size: 54890827995
+  hash: md5
+  path: ztf_ps1_sorted.parquet

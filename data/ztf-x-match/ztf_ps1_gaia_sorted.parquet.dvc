@@ -1,0 +1,5 @@
+outs:
+- md5: ad9c7c79bf6b7dfada8cb57291c0de56
+  size: 828403443
+  hash: md5
+  path: ztf_ps1_gaia_sorted.parquet

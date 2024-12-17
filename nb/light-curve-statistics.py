@@ -23,5 +23,5 @@ for path in sorted(Path('/home/lavrukhina/fields_data').glob('*.parquet')):
             column = row_group.column(mjd_field_idx)
             total_num_values += column.statistics.num_values
 
-total_uniques, total_num_rows, total_num_values, total_num_values / total_num_rows
+print(total_uniques, total_num_rows, total_num_values, total_num_values / total_num_rows)
 # (54800806, 93660131, 4145625951, 44.2624402372446)

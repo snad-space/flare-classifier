@@ -6,6 +6,16 @@ This repository is dedicated to the work related to the search for red dwarf fla
 The task was reformulated as a binary classification problem, where label 1 indicates a flare event, 0 – other events. 
 Three models of classificators based on features extracted from light curve were trained: Random forest, CatBoost and MLP.
 
+ ## Data
+
+The final catalog of M-dwarf flares detected in ZTF DR17 is available in the `data/` folder:
+
+- `flares_catalog.csv` — Catalog of stellar flares with coordinates, distances, extinction, flare parameters (FWHM, amplitude, energy), and spectral classes
+
+See `data/catalog_readme.md` for detailed column descriptions.
+
+For the full description and references, see the paper: https://doi.org/10.1093/mnras/stag145
+
 ### How to run demo DVC pipeline
 
 ```

@@ -13,7 +13,7 @@ Catalog of stellar flares detected in ZTF DR17 data for M-dwarf stars.
 | `oid` | — | ZTF Object ID |
 | `ra` | deg | Right Ascension (J2000) |
 | `dec` | deg | Declination (J2000) |
-| `distance` | pc | Geometric distance from Gaia DR3 (Bailer-Jones et al. 2021) |
+| `distance` | pc | Geometric distance from Gaia EDR3 (Bailer-Jones et al. 2021) |
 | `distance_low` | pc | Lower bound of distance (16th percentile) |
 | `distance_up` | pc | Upper bound of distance (84th percentile) |
 | `plx_flag` | — | Parallax quality flag: 0 = good (RPlx ≥ 5), 1 = poor (RPlx < 5) |
@@ -27,15 +27,15 @@ Catalog of stellar flares detected in ZTF DR17 data for M-dwarf stars.
 | `num_points` | — | Number of photometric points in the flare |
 | `spec_class` | — | Spectral class (M0–M7) from Gaia or Pan-STARRS |
 | `energy` | erg | Bolometric flare energy |
-| `energy_low` | erg | Lower bound of energy |
-| `energy_up` | erg | Upper bound of energy |
+| `energy_low` | erg | Lower bound of bolometric energy |
+| `energy_up` | erg | Upper bound of bolometric energy |
 
 ## Notes
 
-- **Distance**: Geometric distances from Gaia DR3 using the probabilistic approach of Bailer-Jones et al. (2021)
+- **Distance**: Geometric distances from Gaia EDR3 using the probabilistic approach of Bailer-Jones et al. (2021)
 - **Extinction**: Derived from SFD (Schlegel et al. 1998) or Bayestar2019 (Green et al. 2019) dust maps
 - **Energy**: Calculated using the Mendoza flare model. 
-- **Spectral class**: Preferentially from Gaia XP spectra, otherwise from Pan-STARRS photometry
+- **Spectral class**: Preferentially from Gaia spectra, otherwise from Pan-STARRS photometry
 
 ## References
 

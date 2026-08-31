@@ -1,12 +1,11 @@
+import csv
 import os
 import pickle
 import sys
-import csv
 
-import yaml
 import numpy as np
 import pandas as pd
-
+import yaml
 from data_preprocessing import generate_datasets
 from sklearn.preprocessing import StandardScaler
 

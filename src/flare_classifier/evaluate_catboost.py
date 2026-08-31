@@ -1,12 +1,12 @@
-from metrics import *
-from thr_optimize import *
-
+import csv
 import os
 import pickle
 import sys
-import csv
 
 import pandas as pd
+from thr_optimize import *
+
+from metrics import *
 
 if len(sys.argv) != 4:
     sys.stderr.write("Arguments error. Usage:\n")

@@ -1,8 +1,8 @@
-import os
 import json
+import os
 
 import matplotlib.pyplot as plt
-from sklearn.metrics import recall_score, precision_score, accuracy_score, fbeta_score, auc, roc_curve
+from sklearn.metrics import accuracy_score, auc, fbeta_score, precision_score, recall_score, roc_curve
 
 EVAL_PATH = "metrics"
 

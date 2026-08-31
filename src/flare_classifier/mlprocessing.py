@@ -3,13 +3,13 @@ import pickle
 
 import light_curve as lc
 import matplotlib.pyplot as plt
-# import pyarrow.parquet as pq
-from pyarrow.parquet import read_table
 import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier
 from dotenv import load_dotenv
 from minio import Minio
+# import pyarrow.parquet as pq
+from pyarrow.parquet import read_table
 from scipy.interpolate import Akima1DInterpolator
 from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
@@ -465,15 +465,9 @@ def metrics_calc(
     Returns:
         pd.DataFrame: dataframe with calc results
     """
-    from sklearn.metrics import (
-        accuracy_score,
-        average_precision_score,
-        f1_score,
-        fbeta_score,
-        precision_score,
-        recall_score,
-        roc_auc_score,
-    )
+    from sklearn.metrics import (accuracy_score, average_precision_score,
+                                 f1_score, fbeta_score, precision_score,
+                                 recall_score, roc_auc_score)
 
     df.loc[model_name, :] = [
         average_precision_score(y, predict_proba[:, 1]),

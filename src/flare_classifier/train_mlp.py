@@ -1,14 +1,12 @@
+import csv
 import os
 import sys
-import csv
-
-from mlp_model import FlaresDataset, BinaryClassification
 
 import numpy as np
 import pandas as pd
-import yaml
 import torch
-
+import yaml
+from mlp_model import BinaryClassification, FlaresDataset
 from torch import nn
 from torch.utils.data import DataLoader
 
